@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "690051954559",
+    "project_id": "personal-habit-tracker-4789b",
+    "storage_bucket": "personal-habit-tracker-4789b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690051954559:android:f43ccffd96494567a00c4a",
+        "android_client_info": {
+          "package_name": "com.dairlydrive.dailydrive"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv9xAZWExkcURmEtjiYJHXWS5NZjdouR0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

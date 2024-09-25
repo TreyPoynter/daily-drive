@@ -14,6 +14,7 @@ const Register = () => {
           />
           <TextInput
             style={style.loginTextField}
+            secureTextEntry={true}
             placeholder="Password"
           />
         </View>

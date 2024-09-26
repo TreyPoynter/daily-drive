@@ -13,7 +13,8 @@
     },
     "ios": {
       "googleServicesFile": "./GoogleService-Info.plist",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dailydrive.dailydrive"
     },
     "android": {
       "googleServicesFile": "./google-services.json",
@@ -37,6 +38,11 @@
         }
       ],
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2480bafa-b6c8-4222-bfa1-e28a02c3686c"
+      }
+    }
   }
 }

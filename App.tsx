@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Register from './src/Register/Register';
 import Home from './src/Home/Home';
+import Login from './src/Login/Login';
 import { useFonts } from 'expo-font';
+import { enableScreens } from 'react-native-screens';
+
 const Stack = createNativeStackNavigator();
+enableScreens();
 
 export default function App() {
   
@@ -21,17 +25,21 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <View style={styles.container}>
-        <Stack.Navigator>
-          <Stack.Screen name='Home' component={Home}/>
-        </Stack.Navigator>
-        <Stack.Navigator>
-          <Stack.Screen name='' component={Register}/>
-        </Stack.Navigator>
-      </View>
+      <Stack.Navigator initialRouteName='Login' screenOptions={{headerShown: false}}>
+        <Stack.Screen name='Home' component={Home} />
+        <Stack.Screen name='Register' component={Register} options={{
+          animation: 'slide_from_right',
+          animationTypeForReplace: 'push',
+        }}/>
+        <Stack.Screen name='Login' component={Login} options={{
+          animation: 'slide_from_left',
+          animationTypeForReplace: 'push',
+          animationDuration: 320
+        }}/>
+      </Stack.Navigator>
     </NavigationContainer>
-    
   );
+  
 }
 
 const styles = StyleSheet.create({

@@ -1,4 +1,4 @@
-import { Pressable, Keyboard, SafeAreaView, View, Text, StyleSheet, TextInput } from "react-native";
+import { Pressable, Keyboard, SafeAreaView, View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -8,40 +8,66 @@ import db from "@react-native-firebase/database"
 
 const Register = () => {
   const nav = useNavigation<NativeStackNavigationProp<any>>();
+  const [username, setUserName] = useState<string | undefined>();
   const [email, setEmail] = useState<string | undefined>();
   const [password, setPassword] = useState<string | undefined>();
+  const [confirmPassword, setConfirmPassword] = useState<string | undefined>();
 
   const createProfile = async (res: FirebaseAuthTypes.UserCredential) => {
-    db().ref(`/users/${res.user.uid}`).set({ name });
+    //TODO: CRYPT PASSWORDS
+    await db().ref(`/users/${res.user.uid}`).set({ username, email, password });
+    await db().ref(`/users/${res.user.uid}/streak`).set({ streak: 0, highestStreak: 0 });
+    await db().ref(`/goals/${res.user.uid}`).set({});
   }
 
   const registerAndGoToMainFlow = async () => {
-    if(!email || !password)
+    if (!username || !email || !password)  //TODO: MAKE UX BETTER
       return;
+    else if (password != confirmPassword)
+      return;
+
     try {
       // attempt to create a user
       const res = await auth().createUserWithEmailAndPassword(
         email, password
-      );
+      ).catch((error) => {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            Alert.alert('Email already in use!')
+            break;
+          case 'auth/invalid-email':
+            Alert.alert('Invalid email!')
+            break;
+          case 'auth/weak-password':
+            Alert.alert('Password must be at least 6 characters!')
+            break;
+        }
+      });
 
       // check to see if user was created
-      if(res.user) {
+      if (res?.user) {
         await createProfile(res);
-        nav.replace('/Home')
+        nav.replace('Home')
       }
 
-    } catch (err) {
-      
+    } catch (err: any) {
+      Alert.alert(err)
+      console.log(err)
     }
   };
 
-  return(
-    <Pressable style={{flex: 1}} onPress={Keyboard.dismiss}>
+  return (
+    <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
       <SafeAreaView >
-        <View style={{display: 'flex', alignItems: 'center'}}>
+        <View style={{ display: 'flex', alignItems: 'center' }}>
           <Text style={style.titleText}>Daily Drive</Text>
         </View>
-        <View style={{marginHorizontal: '10%', display: 'flex', marginTop: '50%', gap: 40}}>
+        <View style={{ marginHorizontal: '10%', display: 'flex', marginTop: '50%', gap: 40 }}>
+          <TextInput
+            onChangeText={setUserName}
+            style={style.loginTextField}
+            placeholder="Username"
+          />
           <TextInput
             onChangeText={setEmail}
             style={style.loginTextField}
@@ -53,13 +79,19 @@ const Register = () => {
             secureTextEntry={true}
             placeholder="Password"
           />
+          <TextInput
+            onChangeText={setConfirmPassword}
+            style={style.loginTextField}
+            secureTextEntry={true}
+            placeholder="Confirm Password"
+          />
         </View>
-        <View style={{marginHorizontal: '10%', marginTop: '44%', display: 'flex', alignItems: 'center', gap: 10}}>
-          <Pressable style={style.loginButton}>
-            <Text style={style.buttonText}>Login</Text>
+        <View style={{ marginHorizontal: '10%', marginTop: '11%', display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Pressable onPress={registerAndGoToMainFlow} style={style.loginButton}>
+            <Text style={style.buttonText}>Register</Text>
           </Pressable>
-          <Pressable style={style.registerButton}>
-            <Text style={style.registerButtonText}>Register</Text>
+          <Pressable onPress={() => nav.replace('Login')} style={style.registerButton}>
+            <Text style={style.registerButtonText}>Login</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -83,7 +115,7 @@ const style = StyleSheet.create({
     backgroundColor: '#800080',
     borderColor: '#800080',
     borderWidth: 2,
-    paddingHorizontal: '40%',
+    paddingHorizontal: '33%',
     paddingVertical: 15,
     borderRadius: 20,
     alignItems: 'center',

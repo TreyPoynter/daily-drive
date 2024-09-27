@@ -1,44 +1,44 @@
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
-import Register from './src/Register/Register';
-import Home from './src/Home/Home';
-import Login from './src/Login/Login';
+import { MainTabNavigator, AuthStackNavigator } from './src/navigators';
 import { useFonts } from 'expo-font';
 import { enableScreens } from 'react-native-screens';
-import { firebase } from '@react-native-firebase/auth';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { getLocalItem } from './src/utilities';
 
 const Stack = createNativeStackNavigator();
 enableScreens();
 
 export default function App() {
-  
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loaded] = useFonts({
     'Poppins-Regular': require('./assets/Poppins/Poppins-Regular.ttf'),
     'Poppins-Thin': require('./assets/Poppins/Poppins-Thin.ttf'),
   });
 
+  useEffect(() => {
+    async function checkLoginStatus() {
+      console.log(isLoggedIn)
+      const user = await getLocalItem('user')
+      setIsLoggedIn(true);
+    }
+
+    checkLoginStatus();
+  }, []);
+
   if (!loaded) {
     return null;
   }
 
-  
-
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login' screenOptions={{headerShown: false}}>
-        <Stack.Screen name='Home' component={Home} />
-        <Stack.Screen name='Register' component={Register} options={{
-          animation: 'slide_from_right',
-          animationTypeForReplace: 'push',
-        }}/>
-        <Stack.Screen name='Login' component={Login} options={{
-          animation: 'slide_from_left',
-          animationTypeForReplace: 'push',
-          animationDuration: 320
-        }}/>
-      </Stack.Navigator>
+      {isLoggedIn ? (
+        <MainTabNavigator />
+      ) : (
+        <AuthStackNavigator />
+      )}
     </NavigationContainer>
   );
 }

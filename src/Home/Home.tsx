@@ -1,9 +1,23 @@
+import { useEffect, useState } from "react";
 import { Text } from "react-native";
+import { getLocalItem } from "../utilities";
 
 const Home = () => {
+
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    async function getData() {
+      const user = await getLocalItem('user');
+      setUser(user);
+      console.log(user)
+    }
+    getData();
+  }, []);
+
   return(
     <>
-      <Text>HELLO</Text>
+      <Text>HELLO {user?.username}</Text>
     </>
   )
 }

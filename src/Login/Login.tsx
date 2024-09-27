@@ -10,17 +10,19 @@ const Register = () => {
   const nav = useNavigation<NativeStackNavigationProp<any>>();
   const [email, setEmail] = useState<string | undefined>();
   const [password, setPassword] = useState<string | undefined>();
+  let iteration = 0;
 
   useEffect(() => {
     return auth().onAuthStateChanged((currUser) => {
       async function autoLogin() {
         if(!currUser?.uid) return;
         const user = await getUserById(currUser.uid);
-        setLocalItem('user', user);
+        await setLocalItem('user', user);
         nav.replace('Home');
       }
-
-      autoLogin();
+      // to ensure it doesn't get called twice
+      if(iteration == 0) autoLogin();
+      iteration++
     });
   }, []);
 

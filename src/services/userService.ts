@@ -10,9 +10,9 @@ export const getUserById = async (uid: string) => {
     }
 
     const { username, email } = userData;
-    return { username, email };
+    return { username, email, uid };
   } catch (error) {
     console.error('Error fetching user data:', error);
-    throw error;  // Optionally re-throw to handle it in the calling function
+    throw error;
   }
 };

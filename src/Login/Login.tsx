@@ -1,23 +1,37 @@
 import { Pressable, Keyboard, SafeAreaView, View, Text, StyleSheet, TextInput, Alert } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import auth from '@react-native-firebase/auth';
+import { getUserById } from "../services/userService";
+import { setLocalItem } from "../utilities";
 
 const Register = () => {
   const nav = useNavigation<NativeStackNavigationProp<any>>();
   const [email, setEmail] = useState<string | undefined>();
   const [password, setPassword] = useState<string | undefined>();
 
+  useEffect(() => {
+    return auth().onAuthStateChanged((currUser) => {
+      async function autoLogin() {
+        if(!currUser?.uid) return;
+        const user = await getUserById(currUser.uid);
+        setLocalItem('user', user);
+        nav.replace('Home');
+      }
+
+      autoLogin();
+    });
+  }, []);
+
   const goToMainFlow = async () => {
-    if(!email || !password)
+    if (!email || !password)
       return;  //TODO: MAKE UX BETTER
     try {
       const res = await auth().signInWithEmailAndPassword(email, password);
 
-      if(res?.user)
-        nav.replace('Home')
+      if (res?.user)
+        nav.replace('Home');
 
     } catch (error: any) {
       // Handle Firebase errors
@@ -31,13 +45,13 @@ const Register = () => {
     }
   }
 
-  return(
-    <Pressable style={{flex: 1}} onPress={Keyboard.dismiss}>
+  return (
+    <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
       <SafeAreaView >
-        <View style={{display: 'flex', alignItems: 'center'}}>
+        <View style={{ display: 'flex', alignItems: 'center' }}>
           <Text style={style.titleText}>Daily Drive</Text>
         </View>
-        <View style={{marginHorizontal: '10%', display: 'flex', marginTop: '50%', gap: 40}}>
+        <View style={{ marginHorizontal: '10%', display: 'flex', marginTop: '50%', gap: 40 }}>
           <TextInput
             onChangeText={setEmail}
             style={style.loginTextField}
@@ -50,7 +64,7 @@ const Register = () => {
             placeholder="Password"
           />
         </View>
-        <View style={{marginHorizontal: '10%', marginTop: '44%', display: 'flex', alignItems: 'center', gap: 10}}>
+        <View style={{ marginHorizontal: '10%', marginTop: '44%', display: 'flex', alignItems: 'center', gap: 10 }}>
           <Pressable onPress={goToMainFlow} style={style.loginButton}>
             <Text style={style.buttonText}>Login</Text>
           </Pressable>

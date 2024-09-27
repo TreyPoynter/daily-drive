@@ -17,7 +17,7 @@ const Register = () => {
     //TODO: CRYPT PASSWORDS
     await db().ref(`/users/${res.user.uid}`).set({ username, email, password });
     await db().ref(`/users/${res.user.uid}/streak`).set({ streak: 0, highestStreak: 0 });
-    await db().ref(`/goals/${res.user.uid}`).set({});
+    await db().ref(`/goals/${res.user.uid}`).set({0: ''});
   }
 
   const registerAndGoToMainFlow = async () => {

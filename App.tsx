@@ -1,12 +1,13 @@
-import { useEffect } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Register from './src/Register/Register';
 import Home from './src/Home/Home';
 import Login from './src/Login/Login';
 import { useFonts } from 'expo-font';
 import { enableScreens } from 'react-native-screens';
+import { firebase } from '@react-native-firebase/auth';
+import { useEffect } from 'react';
 
 const Stack = createNativeStackNavigator();
 enableScreens();
@@ -22,6 +23,7 @@ export default function App() {
     return null;
   }
 
+  
 
   return (
     <NavigationContainer>
@@ -39,7 +41,6 @@ export default function App() {
       </Stack.Navigator>
     </NavigationContainer>
   );
-  
 }
 
 const styles = StyleSheet.create({

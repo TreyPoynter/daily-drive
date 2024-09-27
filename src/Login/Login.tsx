@@ -14,13 +14,20 @@ const Register = () => {
     if(!email || !password)
       return;  //TODO: MAKE UX BETTER
     try {
-      const res = await auth().signInWithEmailAndPassword(email, password)
+      const res = await auth().signInWithEmailAndPassword(email, password);
 
       if(res?.user)
         nav.replace('Home')
 
-    } catch (err) {
-      Alert.alert('Error', 'Error logging in')
+    } catch (error: any) {
+      // Handle Firebase errors
+      if (error.code === 'auth/user-not-found') {
+        Alert.alert('Login Error', 'User not found. Please check your email and try again.');
+      } else if (error.code === 'auth/invalid-email') {
+        Alert.alert('Login Error', 'Invalid email format. Please enter a valid email.');
+      } else if (error.code === 'auth/invalid-credential') {
+        Alert.alert('Login Error', 'Invalid credentials.');
+      }
     }
   }
 
@@ -44,7 +51,7 @@ const Register = () => {
           />
         </View>
         <View style={{marginHorizontal: '10%', marginTop: '44%', display: 'flex', alignItems: 'center', gap: 10}}>
-          <Pressable style={style.loginButton}>
+          <Pressable onPress={goToMainFlow} style={style.loginButton}>
             <Text style={style.buttonText}>Login</Text>
           </Pressable>
           <Pressable onPress={() => nav.replace('Register')} style={style.registerButton}>

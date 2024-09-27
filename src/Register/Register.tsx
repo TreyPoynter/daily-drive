@@ -28,8 +28,7 @@ const Register = () => {
 
     try {
       // attempt to create a user
-      const res = await auth().createUserWithEmailAndPassword(
-        email, password
+      const res = await auth().createUserWithEmailAndPassword(email, password
       ).catch((error) => {
         switch (error.code) {
           case 'auth/email-already-in-use':

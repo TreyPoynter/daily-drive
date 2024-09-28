@@ -10,3 +10,7 @@ export const getLocalItem = async (key: string) => {
     return JSON.parse(result);
   return null;
 }
+
+export const deleteLocalItem = async (key: string) => {
+  await AsyncStorage.removeItem(key);
+}

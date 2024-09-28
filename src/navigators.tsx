@@ -28,47 +28,57 @@ const GoalStackNavigator = () => {
     </GoalStack.Navigator>
   );
 }
+interface ProfileStackNavigatorProps {
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>; // Function type for setIsLoggedIn
+}
 
-const ProfileStackNavigator = () => {
+export const ProfileStackNavigator: React.FC<ProfileStackNavigatorProps> = ({ setIsLoggedIn }) => {
   return (
     <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
-      <HomeStack.Screen name="ProfileScreen" component={Profile}/>
+      <HomeStack.Screen name="ProfileScreen" children={() => <Profile setIsLoggedIn={setIsLoggedIn}/>}/>
     </ProfileStack.Navigator>
   );
 }
 
-export const MainTabNavigator = () => {
+interface MainTabNavigatorProps {
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>; // Function type for setIsLoggedIn
+}
+
+export const MainTabNavigator: React.FC<MainTabNavigatorProps> = ({ setIsLoggedIn }) => {
   return (
     <Tab.Navigator initialRouteName='Home' screenOptions={({ route }) => ({
       headerShown: false,
       tabBarIcon: ({ color, size }) => {
         let iconName;
 
-        // Choose the icon based on the route name
         if (route.name === 'Home') {
-          iconName = 'home'; // Icon for Home screen
+          iconName = 'home';
         } else if (route.name === 'Profile') {
-          iconName = 'user-alt'; // Icon for Profile screen
+          iconName = 'user-alt';
         } else if (route.name === 'Goals') {
-          iconName = 'flag-checkered'; // Icon for Profile screen
+          iconName = 'flag-checkered';
         }
 
-        // Return the Ionicons component
         return <FontAwesome5 name={iconName} size={size} color={color} />;
       },
     })}
     >
       <Tab.Screen name="Home" component={HomeStackNavigator} />
       <Tab.Screen name="Goals" component={GoalStackNavigator} />
-      <Tab.Screen name="Profile" component={ProfileStackNavigator} />
+      <Tab.Screen name="Profile" children={() => <ProfileStackNavigator setIsLoggedIn={setIsLoggedIn}/>} />
     </Tab.Navigator>
   );
 }
 
-export const AuthStackNavigator = () => {
+interface AuthStackNavigatorProps {
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>; // Function type for setIsLoggedIn
+}
+
+
+export const AuthStackNavigator: React.FC<AuthStackNavigatorProps> = ({ setIsLoggedIn }) => {
   return (
     <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
-      <AuthStack.Screen name='Login' component={Login} options={{
+      <AuthStack.Screen name='Login' children={() => <Login setIsLoggedIn={setIsLoggedIn}/>} options={{
         animation: 'slide_from_left',
         animationTypeForReplace: 'push',
         animationDuration: 320

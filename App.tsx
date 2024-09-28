@@ -12,20 +12,22 @@ enableScreens();
 
 export default function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [loaded] = useFonts({
     'Poppins-Regular': require('./assets/Poppins/Poppins-Regular.ttf'),
     'Poppins-Thin': require('./assets/Poppins/Poppins-Thin.ttf'),
   });
 
   useEffect(() => {
+    // Function to check login status
     async function checkLoginStatus() {
-      const user = await getLocalItem('user')
-      setIsLoggedIn(user ? true: false);
+      const user = await getLocalItem('user'); // Retrieve 'user' from local storage or async storage
+      setIsLoggedIn(!!user); // Set isLoggedIn to true if user exists
     }
 
-    checkLoginStatus();
-  })
+    checkLoginStatus(); // Run the function to check login status
+
+  }, []);
 
   if (!loaded) {
     return null;
@@ -34,9 +36,9 @@ export default function App() {
   return (
     <NavigationContainer>
       {isLoggedIn ? (
-        <MainTabNavigator />
+        <MainTabNavigator setIsLoggedIn={setIsLoggedIn}/>
       ) : (
-        <AuthStackNavigator />
+        <AuthStackNavigator setIsLoggedIn={setIsLoggedIn}/>
       )}
     </NavigationContainer>
   );

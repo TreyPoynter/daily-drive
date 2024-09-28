@@ -6,7 +6,11 @@ import auth from '@react-native-firebase/auth';
 import { getUserById } from "../services/userService";
 import { setLocalItem } from "../utilities";
 
-const Register = () => {
+interface LoginProps {
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Login: React.FC<LoginProps> = ({ setIsLoggedIn }) => {
   const nav = useNavigation<NativeStackNavigationProp<any>>();
   const [email, setEmail] = useState<string | undefined>();
   const [password, setPassword] = useState<string | undefined>();
@@ -18,7 +22,8 @@ const Register = () => {
         if(!currUser?.uid) return;
         const user = await getUserById(currUser.uid);
         await setLocalItem('user', user);
-        nav.replace('Home');
+        setIsLoggedIn(true);
+        nav.replace('Home', {screen: 'HomeScreen'});
       }
       // to ensure it doesn't get called twice
       if(iteration == 0) autoLogin();
@@ -32,8 +37,11 @@ const Register = () => {
     try {
       const res = await auth().signInWithEmailAndPassword(email, password);
 
-      if (res?.user)
+      if (res?.user) {
+        setIsLoggedIn(true);
         nav.replace('Home');
+      }
+        
 
     } catch (error: any) {
       // Handle Firebase errors
@@ -123,4 +131,4 @@ const style = StyleSheet.create({
   }
 });
 
-export default Register;
+export default Login;

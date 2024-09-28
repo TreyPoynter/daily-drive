@@ -6,6 +6,7 @@ import Register from './Register/Register'
 import Home from './Home/Home';
 import Profile from './Profile/Profile';
 import Goals from './Goals/Goals';
+import AddGoal from './AddGoal/AddGoal';
 
 const HomeStack = createNativeStackNavigator();
 const GoalStack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ const GoalStackNavigator = () => {
   return (
     <GoalStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="GoalScreen" component={Goals}/>
+      <HomeStack.Screen name="AddGoalScreen" component={AddGoal}/>
     </GoalStack.Navigator>
   );
 }

@@ -10,7 +10,6 @@ const Home = () => {
     async function getData() {
       const user = await getLocalItem('user');
       setUser(user);
-      console.log(user)
     }
     getData();
   }, []);

@@ -50,8 +50,7 @@ const Register = () => {
       }
 
     } catch (err: any) {
-      Alert.alert(err)
-      console.log(err)
+      Alert.alert(err);
     }
   };
 

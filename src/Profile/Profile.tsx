@@ -10,7 +10,6 @@ interface ProfileProps {
 export const Profile: React.FC<ProfileProps> = ({ setIsLoggedIn }) => {
 
   const nav = useNavigation<NativeStackNavigationProp<any>>();
-  console.log(setIsLoggedIn)
   return (
     <View style={styles.container}>
       <Pressable onPress={() => logoutUser(nav, setIsLoggedIn)}>

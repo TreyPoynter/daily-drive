@@ -23,7 +23,6 @@ export const logoutUser = async (navigation: NativeStackNavigationProp<any>,
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>) => {
   await auth().signOut().then(async () => {
     await deleteLocalItem('user');
-    console.log('LOGGED OUT');
     setIsLoggedIn(false)
     navigation.replace('Login');
   })

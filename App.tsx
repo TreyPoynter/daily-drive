@@ -20,13 +20,12 @@ export default function App() {
 
   useEffect(() => {
     async function checkLoginStatus() {
-      console.log(isLoggedIn)
       const user = await getLocalItem('user')
-      setIsLoggedIn(true);
+      setIsLoggedIn(user ? true: false);
     }
 
     checkLoginStatus();
-  }, []);
+  })
 
   if (!loaded) {
     return null;

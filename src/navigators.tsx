@@ -8,6 +8,8 @@ import Profile from './Profile/Profile';
 import Goals from './Goals/Goals';
 
 const HomeStack = createNativeStackNavigator();
+const GoalStack = createNativeStackNavigator();
+const ProfileStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -21,17 +23,17 @@ const HomeStackNavigator = () => {
 
 const GoalStackNavigator = () => {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <GoalStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="GoalScreen" component={Goals}/>
-    </HomeStack.Navigator>
+    </GoalStack.Navigator>
   );
 }
 
 const ProfileStackNavigator = () => {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="ProfileScreen" component={Profile}/>
-    </HomeStack.Navigator>
+    </ProfileStack.Navigator>
   );
 }
 

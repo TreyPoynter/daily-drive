@@ -16,7 +16,7 @@ export const Profile: React.FC<ProfileProps> = ({ setIsLoggedIn }) => {
         <Text>CLICK ME</Text>
       </Pressable>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

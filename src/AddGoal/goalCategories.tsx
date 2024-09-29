@@ -1,4 +1,4 @@
-export default [
+const goalCategories = [
   {category: 'Health', 'icon': 'heartbeat'},
   {category: 'Finance', 'icon': 'money-check-alt'},
   {category: 'Career', 'icon': 'briefcase'},
@@ -15,3 +15,5 @@ export default [
   {category: 'Environment', 'icon': 'leaf'},
   {category: 'Other', 'icon': 'ellipsis-h'},
 ]
+
+export default goalCategories;

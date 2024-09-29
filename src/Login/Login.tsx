@@ -73,7 +73,7 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn }) => {
           <Textbox header="Password" placeholder="************" fa5Icon="lock" onTextChange={setPassword} isSecure={true} />
         </View>
         <View style={styles.buttonContainer}>
-          <Button text="Login" />
+          <Button onPress={() => goToMainFlow()} text="Login" />
         </View>
         <View style={styles.noAccountContainer}>
           <View style={styles.seperator}></View>

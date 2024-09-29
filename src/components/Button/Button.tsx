@@ -8,7 +8,7 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({ text, onPress }) => {
     return(
-      <TouchableOpacity style={styles.buttonContainer} onPress={() => onPress}>
+      <TouchableOpacity style={styles.buttonContainer} onPress={onPress ? (e) => onPress(e) : () => {}}>
         <Text style={styles.text}>{text}</Text>
       </TouchableOpacity>
     )

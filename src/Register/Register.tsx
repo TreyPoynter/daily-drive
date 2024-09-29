@@ -1,4 +1,7 @@
-import { Pressable, Keyboard, SafeAreaView, View, Text, StyleSheet, TextInput, Alert } from "react-native";
+import { Pressable, Keyboard, SafeAreaView, View, Text, StyleSheet, Alert, Image } from "react-native";
+import Textbox from "../components/Textbox/Textbox";
+import { DailyDriveColors } from "../colors";
+import Button from "../components/Button/Button";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -56,88 +59,80 @@ const Register = () => {
 
   return (
     <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
-      <SafeAreaView >
-        <View style={{ display: 'flex', alignItems: 'center' }}>
-          <Text style={style.titleText}>Daily Drive</Text>
+      <SafeAreaView style={styles.container}>
+        <View style={{ alignItems: 'center' }}>
+          <Image style={styles.logo} source={require('../../assets/dailydrive-logo.png')} />
         </View>
-        <View style={{ marginHorizontal: '10%', display: 'flex', marginTop: '50%', gap: 40 }}>
-          <TextInput
-            onChangeText={setUserName}
-            style={style.loginTextField}
-            placeholder="Username"
-          />
-          <TextInput
-            onChangeText={setEmail}
-            style={style.loginTextField}
-            placeholder="Email"
-          />
-          <TextInput
-            onChangeText={setPassword}
-            style={style.loginTextField}
-            secureTextEntry={true}
-            placeholder="Password"
-          />
-          <TextInput
-            onChangeText={setConfirmPassword}
-            style={style.loginTextField}
-            secureTextEntry={true}
-            placeholder="Confirm Password"
-          />
+        <View style={styles.subheaderContainer}>
+          <Text style={styles.subheader}>Create Your Account</Text>
         </View>
-        <View style={{ marginHorizontal: '10%', marginTop: '11%', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Pressable onPress={registerAndGoToMainFlow} style={style.loginButton}>
-            <Text style={style.buttonText}>Register</Text>
-          </Pressable>
-          <Pressable onPress={() => nav.replace('Login')} style={style.registerButton}>
-            <Text style={style.registerButtonText}>Login</Text>
-          </Pressable>
+        <View style={styles.inputContainer}>
+          <Textbox header="Username" placeholder="John Doe" fa5Icon="user" onTextChange={setUserName} />
+          <View style={{marginTop: 15}}></View>
+          <Textbox header="Email" placeholder="sample@example.com" fa5Icon="envelope" onTextChange={setEmail} />
+          <View style={{marginTop: 15}}></View>
+          <Textbox header="Password" placeholder="************" fa5Icon="lock" onTextChange={setPassword} isSecure={true} />
+          <View style={{marginTop: 15}}></View>
+          <Textbox header="Confirm Password" placeholder="************" fa5Icon="lock" onTextChange={setConfirmPassword} isSecure={true} />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button text="Register" />
+        </View>
+        <View style={styles.noAccountContainer}>
+          <View style={styles.seperator}></View>
+          <View style={{ marginTop: '10%', justifyContent: 'center', flexDirection: 'row', gap: 5 }}>
+            <Text style={{fontFamily: 'Inter-Regular', color: '#7F7F7F'}}>Already have an account?</Text>
+            <Pressable onPress={() => nav.navigate('Login')}>
+              <Text style={{color: DailyDriveColors.dailyDriveGreen, fontFamily: 'Inter-Bold'}}>Log In</Text>
+            </Pressable>
+          </View>
         </View>
       </SafeAreaView>
     </Pressable>
   );
 }
 
-const style = StyleSheet.create({
-  titleText: {
-    fontSize: 50,
-  },
-  loginTextField: {
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start', // Positions items to the top
+    alignItems: 'center', // Centers items horizontally
+    paddingTop: 50, // Adds some space from the top of the screen
     width: '100%',
-    borderBottomColor: '#000',
-    borderBottomWidth: 1,
-    paddingBottom: 4,
-    fontSize: 19
+    backgroundColor: '#fff', // Optional background color
   },
-  loginButton: {
-    backgroundColor: '#800080',
-    borderColor: '#800080',
-    borderWidth: 2,
-    paddingHorizontal: '33%',
-    paddingVertical: 15,
-    borderRadius: 20,
+  logo: {
+    height: 100,
+    resizeMode: 'contain',
+  },
+  subheaderContainer: {
+    width: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
+    marginBottom: 20, // Adds space between the subheader and the input fields
   },
-  registerButton: {
-    backgroundColor: '#fff',
-    paddingHorizontal: '36.5%',
-    paddingVertical: 15,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: '#d7dede',
-    borderWidth: 2,
+  subheader: {
+    color: '#7F7F7F',
+    fontSize: 20,
+    fontFamily: 'Inter-Regular',
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+  inputContainer: {
+    width: '100%',
+    paddingHorizontal: 20,
   },
-  registerButtonText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: 'bold',
-  }
+  buttonContainer: {
+    width: '100%',
+    paddingHorizontal: 20,
+    marginTop: 20,
+  },
+  noAccountContainer: {
+    width: '100%',
+    paddingHorizontal: 20,
+    marginTop: '10%',
+  },
+  seperator: {
+    borderWidth: 0.6,
+    borderColor: '#DADADA',
+  },
 });
 
 export default Register;

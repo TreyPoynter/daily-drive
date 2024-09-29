@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import { enableScreens } from 'react-native-screens';
 import { useEffect, useState } from 'react';
 import { getLocalItem } from './src/utilities';
+import { StatusBar } from 'expo-status-bar';
 
 const Stack = createNativeStackNavigator();
 enableScreens();
@@ -35,6 +36,10 @@ export default function App() {
   }
 
   return (
+    <>
+    <StatusBar
+        animated={true}
+        backgroundColor="#61dafb"/>
     <NavigationContainer>
       {isLoggedIn ? (
         <MainTabNavigator setIsLoggedIn={setIsLoggedIn}/>
@@ -42,6 +47,8 @@ export default function App() {
         <AuthStackNavigator setIsLoggedIn={setIsLoggedIn}/>
       )}
     </NavigationContainer>
+    </>
+    
   );
 }
 

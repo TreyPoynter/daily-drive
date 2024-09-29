@@ -100,7 +100,6 @@ const Register = () => {
 const style = StyleSheet.create({
   titleText: {
     fontSize: 50,
-    fontFamily: 'Poppins-Thin'
   },
   loginTextField: {
     width: '100%',

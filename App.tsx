@@ -14,8 +14,9 @@ export default function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [loaded] = useFonts({
-    'Poppins-Regular': require('./assets/Poppins/Poppins-Regular.ttf'),
-    'Poppins-Thin': require('./assets/Poppins/Poppins-Thin.ttf'),
+    'Inter-Regular': require('./assets/Inter/static/Inter_18pt-Regular.ttf'),
+    'Inter-Medium': require('./assets/Inter/static/Inter_18pt-Medium.ttf'),
+    'Inter-Bold': require('./assets/Inter/static/Inter_18pt-Bold.ttf'),
   });
 
   useEffect(() => {
@@ -48,6 +49,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Inter-Regular'
   },
 });

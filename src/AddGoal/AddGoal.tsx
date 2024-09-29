@@ -19,14 +19,16 @@ const AddGoal = () => {
       category: category,
       alertTime: alertTime
     }
-    console.log(newGoal)
+    console.log(newGoal);
   }
 
   return (
-    <Pressable onPress={() => Keyboard.dismiss} style={styles.container}>
+    <Pressable onPress={Keyboard.dismiss} style={styles.container}>
       <Pressable onPress={() => nav.goBack()}>
         <Text>{'<'}</Text>
       </Pressable>
+      <TextInput style={styles.text} placeholder="Title" onChangeText={setTitle}/>
+      <TextInput style={styles.text} placeholder="Description" onChangeText={setDescription}/>
       <SearchableDropdown options={goalCategories.map(c => c.category)} onOptionSelected={setCategory}/>
       <Pressable onPress={createGoal}>
         <Text>{'ADD GOAL'}</Text>
@@ -40,6 +42,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  text: {
+    fontSize: 20,
+    borderColor: '#000',
+    borderWidth: 1.5,
+    paddingVertical: 5,
+    paddingHorizontal: 40,
+    borderRadius: 8
   }
 })
 

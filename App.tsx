@@ -17,6 +17,7 @@ export default function App() {
   const [loaded] = useFonts({
     'Inter-Regular': require('./assets/Inter/static/Inter_18pt-Regular.ttf'),
     'Inter-Medium': require('./assets/Inter/static/Inter_18pt-Medium.ttf'),
+    'Inter-SemiBold': require('./assets/Inter/static/Inter_24pt-SemiBold.ttf'),
     'Inter-Bold': require('./assets/Inter/static/Inter_18pt-Bold.ttf'),
   });
 

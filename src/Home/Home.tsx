@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, FlatList } from "react-native";
 import { getLocalItem } from "../utilities";
 import GradientBackgroundWrapper from "../components/GradientBackgroundWrapper/GradientBackgroundWrapper";
 import CurrentStreak from "../components/CurrentStreak/CurrentStreak";
+import TodaysGoalList from "../components/TodaysGoalList/TodaysGoalList";
 
 const Home = () => {
 
@@ -23,8 +24,12 @@ const Home = () => {
           <Text style={styles.greetingName}>Hello, {user.username}</Text>
           <Text style={styles.greeting}>Welcome back!</Text>
         </View>
-        <View>
+        <View style={{marginBottom: 18}}>
           <CurrentStreak/>
+        </View>
+        <View>
+          <Text style={{fontFamily: 'Inter-Medium', fontSize: 16, marginBottom: 8}}>Today's goal</Text>
+          <TodaysGoalList/>
         </View>
       </View>
     </GradientBackgroundWrapper>

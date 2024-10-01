@@ -38,8 +38,7 @@
           }
         }
       ],
-      "expo-font",
-      "expo-linear-gradient"
+      "expo-font"
     ],
     "extra": {
       "eas": {

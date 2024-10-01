@@ -17,9 +17,11 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [loaded] = useFonts({
     'Inter-Regular': require('./assets/Inter/static/Inter_18pt-Regular.ttf'),  // 400
+    'Poppins-Regular': require('./assets/Poppins/Poppins-Medium.ttf'),  // 400
     'Inter-Medium': require('./assets/Inter/static/Inter_18pt-Medium.ttf'),  // 500
     'Inter-SemiBold': require('./assets/Inter/static/Inter_24pt-SemiBold.ttf'),  //600
     'Inter-Bold': require('./assets/Inter/static/Inter_18pt-Bold.ttf'),  // 700
+    'Poppins-Bold': require('./assets/Poppins/Poppins-Bold.ttf'),  // 700
   });
 
   useEffect(() => {

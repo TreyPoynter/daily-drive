@@ -81,7 +81,7 @@ interface GoalListItemProps {
   category: string
 }
 
-const GoalListItem: React.FC<GoalListItemProps> = ({ title, description, category }) => {
+export const GoalListItem: React.FC<GoalListItemProps> = ({ title, description, category }) => {
   const foundCategory = goalCategories.find((item) => item.category === category)?.icon ?? 'ellipsis-h';
 
   return (

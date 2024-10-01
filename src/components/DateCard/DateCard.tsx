@@ -11,7 +11,7 @@ const days = [
 ]
 
 const DateCard: React.FC<DateCardProps> = ({ date, isSelected = false }) => {
-  return(
+  return (
     <View style={styles.dateCardContainer}>
       <Text style={{fontFamily: 'Poppins-Regular', textTransform: 'uppercase', fontSize: 13}}>{days[date.getDay()]}</Text>
       <Text style={isSelected ? styles.dateSelected : styles.notSelected}>

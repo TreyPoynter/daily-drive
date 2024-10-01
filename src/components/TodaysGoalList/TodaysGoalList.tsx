@@ -3,6 +3,8 @@ import { useRef } from "react";
 import goalCategories from "../../AddGoal/goalCategories";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { DailyDriveColors } from "../../colors";
+import Swipable from "../Swipable/Swipable";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const dummyGoals = [
   {
@@ -81,85 +83,41 @@ interface GoalListItemProps {
 
 const GoalListItem: React.FC<GoalListItemProps> = ({ title, description, category }) => {
   const foundCategory = goalCategories.find((item) => item.category === category)?.icon ?? 'ellipsis-h';
-  
-  // Create animated value to track the horizontal position of the list item
-  const pan = useRef(new Animated.Value(0)).current;
-  const checkmarkVisible = useRef(false); // Track if the checkmark is visible
-
-  // Define the PanResponder for handling swipe gestures
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: (evt, gestureState) => Math.abs(gestureState.dx) > 10, // Detect horizontal movement
-      onPanResponderMove: (evt, gestureState) => {
-        if (gestureState.dx < 0) {
-          // Only allow movement to the left (dx < 0)
-          Animated.event([null, { dx: pan }], { useNativeDriver: false })(evt, gestureState);
-        }
-      },
-      onPanResponderRelease: (evt, gestureState) => {
-        if (gestureState.dx < -200) {
-          // If swiped enough to the left, lock position at -200 and show the checkmark
-          checkmarkVisible.current = true;
-          Animated.spring(pan, {
-            toValue: -200, // Lock the position after swipe
-            useNativeDriver: false,
-          }).start();
-        } else {
-          // If not swiped enough, reset position
-          checkmarkVisible.current = false;
-          Animated.spring(pan, {
-            toValue: 0,
-            useNativeDriver: false,
-          }).start();
-        }
-      },
-    })
-  ).current;
-
-  // Interpolating the checkmark opacity and position from the swipe gesture
-  const checkmarkOpacity = pan.interpolate({
-    inputRange: [-150, -50],
-    outputRange: [1, 0],
-    extrapolate: 'clamp',
-  });
 
   return (
-    <View style={styles.container}>
-      {/* Green checkmark that appears when swiped */}
-      <Animated.View style={[styles.checkmarkContainer, { opacity: checkmarkOpacity }]}>
-        <FontAwesome5 name="check" size={20} color={'#fff'} />
-      </Animated.View>
-
-      {/* Swipeable content */}
-      <Animated.View
-        style={[styles.listItemContainer, { transform: [{ translateX: pan }] }]}
-        {...panResponder.panHandlers}
-      >
-        <View style={styles.right}>
-          <View style={styles.iconStyle}>
-            <FontAwesome5 name={foundCategory} size={12} color={DailyDriveColors.dailyDriveGreen} />
-          </View>
-          <View style={{ justifyContent: 'space-between', width: '80%' }}>
-            <Text style={{ fontFamily: 'Inter-Medium', color: '#575757' }} numberOfLines={1} ellipsizeMode="tail">
-              {title}
-            </Text>
-            <Text style={{ fontFamily: 'Inter-Regular', color: '#7F7F7F', fontSize: 12 }} numberOfLines={1} ellipsizeMode="tail">
-              {description}
-            </Text>
-          </View>
+    <View style={styles.listItemContainer}>
+      <View style={styles.right}>
+        <View style={styles.iconStyle}>
+          <FontAwesome5 name={foundCategory} size={12} color={DailyDriveColors.dailyDriveGreen} />
         </View>
-      </Animated.View>
+        <View style={{ justifyContent: 'space-between', width: '80%' }}>
+          <Text style={{ fontFamily: 'Inter-Medium', color: '#575757' }} numberOfLines={1} ellipsizeMode="tail">
+            {title}
+          </Text>
+          <Text style={{ fontFamily: 'Inter-Regular', color: '#7F7F7F', fontSize: 12 }} numberOfLines={1} ellipsizeMode="tail">
+            {description}
+          </Text>
+        </View>
+      </View>
     </View>
+
   );
 };
 
 const TodaysGoalList = () => {
   // HEIGHT OF THE LIST ITEM CONTAINER TIMES HOW MANY I WANT TO SHOW
   return (
-    <SafeAreaView style={{ height: 64*5 }}> 
+    <SafeAreaView style={{ height: 64 * 5 }}>
       <FlatList
         data={dummyGoals}
-        renderItem={({ item }) => <GoalListItem title={item.title} category={item.category} description={item.description} />}
+        renderItem={({ item }) => (
+          <GestureHandlerRootView style={{backgroundColor: DailyDriveColors.dailyDriveGreen, borderRadius: 5}}>
+            <Swipable>
+              <GoalListItem title={item.title} category={item.category} description={item.description} />
+            </Swipable>
+          </GestureHandlerRootView>
+
+        )}
         keyExtractor={item => item.description}
       />
     </SafeAreaView>
@@ -180,6 +138,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: '100%',
     right: 0,
+    zIndex: 3
   },
   listItemContainer: {
     width: '100%',

@@ -4,7 +4,7 @@
     "slug": "daily-drive",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/dailydrive-logo.png",
+    "icon": "./assets/dailydrive-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",

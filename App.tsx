@@ -7,6 +7,7 @@ import { enableScreens } from 'react-native-screens';
 import { useEffect, useState } from 'react';
 import { getLocalItem } from './src/utilities';
 import { StatusBar } from 'expo-status-bar';
+import GradientBackgroundWrapper from './src/components/GradientBackgroundWrapper/GradientBackgroundWrapper';
 
 const Stack = createNativeStackNavigator();
 enableScreens();
@@ -38,12 +39,11 @@ export default function App() {
 
   return (
     <>
-    <StatusBar
-        animated={true}
-        backgroundColor="#61dafb"/>
+    <StatusBar animated={true} backgroundColor="#61dafb"/>
     <NavigationContainer>
       {isLoggedIn ? (
         <MainTabNavigator setIsLoggedIn={setIsLoggedIn}/>
+        
       ) : (
         <AuthStackNavigator setIsLoggedIn={setIsLoggedIn}/>
       )}

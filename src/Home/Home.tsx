@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { getLocalItem } from "../utilities";
+import GradientBackgroundWrapper from "../components/GradientBackgroundWrapper/GradientBackgroundWrapper";
+import CurrentStreak from "../components/CurrentStreak/CurrentStreak";
 
 const Home = () => {
 
-  const [user, setUser] = useState({username: ''});
+  const [user, setUser] = useState({ username: '' });
 
   useEffect(() => {
     async function getData() {
@@ -14,23 +16,26 @@ const Home = () => {
     getData();
   }, []);
 
-  return(
-    <View style={styles.homeContainer}>
-    <View>
-      <Text style={styles.greetingName}>Hello, {user.username}</Text>
-      <Text style={styles.greeting}>Welcome back!</Text>
-    </View>
-    </View>
+  return (
+    <GradientBackgroundWrapper >
+      <View style={styles.homeContainer}>
+        <View style={{marginBottom: 18}}>
+          <Text style={styles.greetingName}>Hello, {user.username}</Text>
+          <Text style={styles.greeting}>Welcome back!</Text>
+        </View>
+        <View>
+          <CurrentStreak/>
+        </View>
+      </View>
+    </GradientBackgroundWrapper>
   );
 }
 
 const styles = StyleSheet.create({
-  homeContainer:{
-    flex: 1,
+  homeContainer: {
     justifyContent: 'flex-start', // Positions items to the top
     paddingTop: 50, // Adds some space from the top of the screen
     width: '100%',
-    backgroundColor: '#fff', // Optional background color
     paddingHorizontal: 20,
   },
   greetingName: {

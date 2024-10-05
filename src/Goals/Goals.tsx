@@ -78,13 +78,22 @@ const Goals = () => {
               keyExtractor={item => item.getDate()}
             />
           </SafeAreaView>
-          <View>
+          <View style={{marginTop: 30, marginBottom: 20}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+              <View>
+                <Text style={{fontFamily: 'Inter-Regular', color: '#7F7F7F', fontSize: 12, paddingBottom: 7}}>Showing Results</Text>
+                <Text style={{fontFamily: 'Inter-Bold', fontSize: 16}}>Habits List</Text>
+              </View>
+              <Pressable onPress={() => nav.navigate('Add Goal', {screen: 'AddGoalScreen'})}>
+                <Text style={{fontFamily: 'Inter-Bold', color: DailyDriveColors.dailyDriveDarkGreen}}>Add New</Text>
+              </Pressable>
+            </View>
             <SafeAreaView style={{ height: 64 * 5 }}>
               <FlatList
                 data={dummyGoals}
                 renderItem={({ item }) => (
                   <GestureHandlerRootView style={{ backgroundColor: DailyDriveColors.dailyDriveGreen, borderRadius: 5 }}>
-                    <Swipable>
+                    <Swipable icon="trash-alt">
                       <GoalListItem title={item.title} category={item.category} description={item.description} />
                     </Swipable>
                   </GestureHandlerRootView>

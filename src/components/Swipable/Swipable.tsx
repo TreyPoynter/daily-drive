@@ -16,9 +16,10 @@ interface SwipableProps {
   children: React.ReactNode;
   style?: any;
   onSwipeComplete?: () => void; // function prop
+  icon?: string;
 }
 
-const Swipable: FC<SwipableProps> = ({ children, style, onSwipeComplete }) => {
+const Swipable: FC<SwipableProps> = ({ children, style, onSwipeComplete, icon = "check-circle" }) => {
   const screenWidth = useWindowDimensions().width;
   const translateX = useSharedValue(0);
   const scaleX = useSharedValue(0);
@@ -97,7 +98,7 @@ const Swipable: FC<SwipableProps> = ({ children, style, onSwipeComplete }) => {
               checkmarkOpacity, // Apply opacity animation
             ]}
           >
-            <FontAwesome5 name="check-circle" size={24} color="#fff" />
+            <FontAwesome5 name={icon} size={24} color="#fff" />
           </Animated.View>
 
           {/* Swipeable content */}

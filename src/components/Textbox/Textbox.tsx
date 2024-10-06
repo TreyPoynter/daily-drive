@@ -7,14 +7,15 @@ interface TextboxProps {
   fa5Icon?: string,
   placeholder?: string,
   isSecure?: boolean,
+  style?: any;
   onTextChange: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
-const Textbox: React.FC<TextboxProps> = ({ header, fa5Icon, placeholder, isSecure = false, onTextChange }) => {
+const Textbox: React.FC<TextboxProps> = ({ header, fa5Icon, placeholder, isSecure = false, onTextChange, style }) => {
   return (
     <>
       {header ? <Text style={styles.header}>{header}</Text> : null}
-      <View style={styles.textboxContainer}>
+      <View style={{...styles.textboxContainer, ...style}}>
         {fa5Icon && (
           <Pressable style={styles.iconContainer}>
             <FontAwesome5 name={fa5Icon} size={17} color={DailyDriveColors.dailyDriveGreen} />

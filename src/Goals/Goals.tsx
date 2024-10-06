@@ -42,8 +42,8 @@ const Goals = () => {
     setCurrSelectedDate(currDate);
 
     const days = [];
-    for (let currDay = 0; currDay < 7; currDay++) {
-      days.push(startOfWeek(currDate, currDay)); // adjust as needed
+    for (let currDayOffset = 0; currDayOffset < 7; currDayOffset++) {
+      days.push(startOfWeek(currDate, currDayOffset));
     }
 
     setDaysOfWeek(days);
@@ -52,11 +52,8 @@ const Goals = () => {
   return (
     <GradientBackgroundWrapper>
       <View style={styles.container}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Pressable onPress={() => nav.navigate('Home')}>
-            <FontAwesome6 name="angle-left" size={24} color="black" />
-          </Pressable>
-          <Text style={{ marginLeft: '36.5%', fontFamily: 'Inter-SemiBold' }}>My Goals</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ fontFamily: 'Inter-SemiBold' }}>My Goals</Text>
         </View>
         <View style={{ marginTop: 30 }}>
           <Text style={{ fontFamily: 'Inter-SemiBold', marginBottom: 7 }}>Select</Text>
